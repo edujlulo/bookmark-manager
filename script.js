@@ -8,20 +8,10 @@ function getBookmarks() {
 
 function displayOrCloseForm() {}
 
-const objeto = {
-  name: "Eduardo",
-  age: 31,
-  profession: "Web developer",
-};
+const personas2 = [
+  { nombre: "Ana", edad: 25 },
+  { nombre: "Juan", edad: 19 },
+  { nombre: "Luis", edad: 30 },
+];
 
-// const arr = Object.entries(objeto);
-
-// console.log(arr.map(([k, v]) => v));
-
-function invertirObjeto(obj) {
-  return Object.fromEntries(
-    Object.entries(obj).map(([key, value]) => [value, key])
-  );
-}
-
-console.log(invertirObjeto(objeto));
+console.log(personas2.reduce((acc, p) => acc + p.edad, 0));
