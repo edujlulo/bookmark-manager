@@ -4,10 +4,12 @@ const addBookmarkBtn = document.getElementById("add-bookmark-button");
 const addBookmarkBtnForm = document.getElementById("add-bookmark-button-form");
 const categoryDropdown = document.getElementById("category-dropdown");
 const categoryName = document.querySelector(".category-name");
+const categoryName2 = document.querySelector(".category-name2");
 const closeFormBtn = document.querySelector("#close-form-button");
 const bookmarkListSection = document.querySelector("#bookmark-list-section");
 const viewCategoryBtn = document.querySelector("#view-category-button");
 const closeListBtn = document.querySelector("#close-list-button");
+const categoryList = document.querySelector("#category-list");
 
 function getBookmarks() {
   let bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
@@ -61,7 +63,17 @@ addBookmarkBtnForm.addEventListener("click", () => {
 
 viewCategoryBtn.addEventListener("click", () => {
   displayOrHideCategory();
-  categoryName.textContent = categoryDropdown.value;
+  categoryName2.textContent = categoryDropdown.value;
+  const bookmarks = getBookmarks();
+  categoryList.innerHTML = "";
+  const ul = document.createElement("ul");
+  categoryList.appendChild(ul);
+  bookmarks.forEach((b) => {
+    const li = document.createElement("li");
+    li.textContent = b.name;
+    ul.appendChild(li);
+    console.log(b.name);
+  });
 });
 
 closeListBtn.addEventListener("click", () => {
