@@ -62,18 +62,23 @@ addBookmarkBtnForm.addEventListener("click", () => {
 });
 
 viewCategoryBtn.addEventListener("click", () => {
-  displayOrHideCategory();
   categoryName2.textContent = categoryDropdown.value;
   const bookmarks = getBookmarks();
   categoryList.innerHTML = "";
   const ul = document.createElement("ul");
   categoryList.appendChild(ul);
-  bookmarks.forEach((b) => {
-    const li = document.createElement("li");
-    li.textContent = b.name;
-    ul.appendChild(li);
-    console.log(b.name);
-  });
+  bookmarks
+    .filter((b) => b.category === categoryDropdown.value)
+    .forEach((b) => {
+      const li = document.createElement("li");
+      li.textContent = b.name;
+      ul.appendChild(li);
+    });
+  if (ul.innerHTML === "") {
+    categoryList.textContent = "No Bookmarks Found";
+  }
+  console.log(categoryList);
+  displayOrHideCategory();
 });
 
 closeListBtn.addEventListener("click", () => {

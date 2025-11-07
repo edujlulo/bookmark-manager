@@ -68,7 +68,10 @@ h2 {
   border-radius: 10px;
 }
 
-#category-list,
+#category-list {
+  color: var(--dark-grey);
+}
+
 h1,
 h2,
 label {
