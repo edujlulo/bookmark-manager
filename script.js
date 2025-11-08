@@ -89,14 +89,25 @@ function renderBookmarks() {
     const label = document.createElement("label");
     const input = document.createElement("input");
     const li = document.createElement("li");
+    const nameSpan = document.createElement("span");
 
     label.classList.add("label-list");
     input.type = "checkbox";
     input.id = b.name;
     input.value = b.name;
 
+    nameSpan.textContent = " " + b.name;
+    nameSpan.style.cursor = "pointer";
+    nameSpan.style.textDecoration = "underline";
+
+    nameSpan.addEventListener("click", () => {
+      alert(
+        `This is just an example. Normally, this link would take you to: ${b.url}`
+      );
+    });
+
     label.appendChild(input);
-    label.appendChild(document.createTextNode(" " + b.name));
+    label.appendChild(nameSpan);
     li.appendChild(label);
     ul.appendChild(li);
   });
