@@ -11,6 +11,8 @@ const viewCategoryBtn = document.querySelector("#view-category-button");
 const closeListBtn = document.querySelector("#close-list-button");
 const categoryList = document.querySelector("#category-list");
 const deleteBookmarkBtn = document.querySelector("#delete-bookmark-button");
+const validationName = document.querySelector("#validation-name");
+const validationUrl = document.querySelector("#validation-url");
 
 function getBookmarks() {
   let bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
@@ -39,6 +41,8 @@ function displayOrHideCategory() {
 
 addBookmarkBtn.addEventListener("click", () => {
   categoryName.textContent = categoryDropdown.value;
+  validationName.style = "display: none;";
+  validationUrl.style = "display: none;";
   displayOrCloseForm();
 });
 
@@ -55,10 +59,30 @@ addBookmarkBtnForm.addEventListener("click", () => {
     category: categoryDropdown.value,
     url: url.value,
   };
+
+  let hasError = false;
+
+  if (name.value.trim() === "") {
+    validationName.style = "display: block;";
+    hasError = true;
+  } else {
+    validationName.style = "display: none;";
+  }
+
+  if (url.value.trim() === "") {
+    validationUrl.style = "display: block;";
+    hasError = true;
+  } else {
+    validationUrl.style = "display: none;";
+  }
+
+  if (hasError) return;
+
   bookmarks.push(obj);
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   name.value = "";
   url.value = "";
+
   displayOrCloseForm();
 });
 
