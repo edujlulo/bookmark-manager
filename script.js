@@ -10,6 +10,7 @@ const bookmarkListSection = document.querySelector("#bookmark-list-section");
 const viewCategoryBtn = document.querySelector("#view-category-button");
 const closeListBtn = document.querySelector("#close-list-button");
 const categoryList = document.querySelector("#category-list");
+const deleteBookmarkBtn = document.querySelector("#delete-bookmark-button");
 
 function getBookmarks() {
   let bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
@@ -62,25 +63,63 @@ addBookmarkBtnForm.addEventListener("click", () => {
 });
 
 viewCategoryBtn.addEventListener("click", () => {
-  categoryName2.textContent = categoryDropdown.value;
-  const bookmarks = getBookmarks();
-  categoryList.innerHTML = "";
-  const ul = document.createElement("ul");
-  categoryList.appendChild(ul);
-  bookmarks
-    .filter((b) => b.category === categoryDropdown.value)
-    .forEach((b) => {
-      const li = document.createElement("li");
-      li.textContent = b.name;
-      ul.appendChild(li);
-    });
-  if (ul.innerHTML === "") {
-    categoryList.textContent = "No Bookmarks Found";
-  }
-  console.log(categoryList);
+  renderBookmarks();
+
   displayOrHideCategory();
 });
 
+function renderBookmarks() {
+  categoryName2.textContent = categoryDropdown.value;
+  const bookmarks = getBookmarks();
+  categoryList.innerHTML = "";
+
+  const filtered = bookmarks.filter(
+    (b) => b.category === categoryDropdown.value
+  );
+
+  if (filtered.length === 0) {
+    categoryList.textContent = "No Bookmarks Found";
+    return;
+  }
+
+  const ul = document.createElement("ul");
+  categoryList.appendChild(ul);
+
+  filtered.forEach((b) => {
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    const li = document.createElement("li");
+
+    label.classList.add("label-list");
+    input.type = "checkbox";
+    input.id = b.name;
+    input.value = b.name;
+
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(" " + b.name));
+    li.appendChild(label);
+    ul.appendChild(li);
+  });
+}
+
 closeListBtn.addEventListener("click", () => {
   displayOrHideCategory();
+});
+
+deleteBookmarkBtn.addEventListener("click", () => {
+  const checkboxes = document.querySelectorAll(
+    '#category-list input[type="checkbox"]'
+  );
+
+  let bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+
+  checkboxes.forEach((cb) => {
+    if (cb.checked) {
+      bookmarks = bookmarks.filter((b) => b.name !== cb.value);
+    }
+  });
+
+  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+
+  renderBookmarks();
 });

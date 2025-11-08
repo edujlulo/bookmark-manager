@@ -68,7 +68,8 @@ h2 {
   border-radius: 10px;
 }
 
-#category-list {
+#category-list,
+.label-list {
   color: var(--dark-grey);
 }
 
@@ -80,6 +81,10 @@ label {
 
 #category-list p {
   color: var(--dark-grey);
+}
+
+ul {
+  list-style-type: none;
 }
 
 button {
